@@ -1,4 +1,4 @@
-# OmniFi (Ω)
+# OmniFi
 
 > **Enterprise-Grade, Non-Custodial Multi-Chain Decentralized Exchange & Liquidity Protocol**  
 > *Engineered from first principles across Ethereum, Base, and Solana — featuring native Uniswap v2, v3 (CLMM), and v4 (Singleton) implementations, an algorithmic graph-routing engine, institutional multi-chain governance, formal verification, and high-frequency REST routing microservices.*
