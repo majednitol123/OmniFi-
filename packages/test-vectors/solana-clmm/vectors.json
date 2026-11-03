@@ -1,0 +1,315 @@
+{
+  "metadata": {
+    "generator": "omnifi-solana-clmm-reference-model",
+    "version": "1.0",
+    "spec": "solana-clmm-spec.md",
+    "q64": "18446744073709551616",
+    "fee_denominator": 1000000,
+    "min_tick": -887272,
+    "max_tick": 887272,
+    "tick_array_size": 88,
+    "note": "Sqrt-prices use Q32.64 (u128). Fee growth uses Q64.64 (u128)."
+  },
+  "tick_to_sqrt_price": [
+    {
+      "tick": 0,
+      "sqrt_price_x64": "18446744073709551616",
+      "roundtrip_tick": 0
+    },
+    {
+      "tick": 1,
+      "sqrt_price_x64": "18447666387855959850",
+      "roundtrip_tick": 1
+    },
+    {
+      "tick": -1,
+      "sqrt_price_x64": "18445821805675392311",
+      "roundtrip_tick": -1
+    },
+    {
+      "tick": 100,
+      "sqrt_price_x64": "18539204128674405812",
+      "roundtrip_tick": 100
+    },
+    {
+      "tick": -100,
+      "sqrt_price_x64": "18354745142194483563",
+      "roundtrip_tick": -100
+    },
+    {
+      "tick": 60,
+      "sqrt_price_x64": "18502164624211761447",
+      "roundtrip_tick": 60
+    },
+    {
+      "tick": -60,
+      "sqrt_price_x64": "18391489527427947882",
+      "roundtrip_tick": -60
+    },
+    {
+      "tick": 887272,
+      "sqrt_price_x64": "340269576638287423002690256994712238280",
+      "roundtrip_tick": 887272
+    },
+    {
+      "tick": -887272,
+      "sqrt_price_x64": "1",
+      "roundtrip_tick": -873410
+    },
+    {
+      "tick": 23028,
+      "sqrt_price_x64": "58336636874222222062",
+      "roundtrip_tick": 23028
+    },
+    {
+      "tick": -23028,
+      "sqrt_price_x64": "5833081664522596901",
+      "roundtrip_tick": -23028
+    }
+  ],
+  "tick_array_mapping": [
+    {
+      "tick": 0,
+      "tick_spacing": 60,
+      "array_start_index": 0,
+      "offset_in_array": 0,
+      "array_pda_seed_tick": 0
+    },
+    {
+      "tick": 59,
+      "tick_spacing": 60,
+      "array_start_index": 0,
+      "offset_in_array": 0,
+      "array_pda_seed_tick": 0
+    },
+    {
+      "tick": 60,
+      "tick_spacing": 60,
+      "array_start_index": 0,
+      "offset_in_array": 1,
+      "array_pda_seed_tick": 0
+    },
+    {
+      "tick": -1,
+      "tick_spacing": 60,
+      "array_start_index": -5280,
+      "offset_in_array": 87,
+      "array_pda_seed_tick": -5280
+    },
+    {
+      "tick": -60,
+      "tick_spacing": 60,
+      "array_start_index": -10560,
+      "offset_in_array": 175,
+      "array_pda_seed_tick": -10560
+    },
+    {
+      "tick": 5280,
+      "tick_spacing": 60,
+      "array_start_index": 5280,
+      "offset_in_array": 0,
+      "array_pda_seed_tick": 5280
+    },
+    {
+      "tick": -5280,
+      "tick_spacing": 60,
+      "array_start_index": -10560,
+      "offset_in_array": 88,
+      "array_pda_seed_tick": -10560
+    },
+    {
+      "tick": 0,
+      "tick_spacing": 1,
+      "array_start_index": 0,
+      "offset_in_array": 0,
+      "array_pda_seed_tick": 0
+    },
+    {
+      "tick": 87,
+      "tick_spacing": 1,
+      "array_start_index": 0,
+      "offset_in_array": 87,
+      "array_pda_seed_tick": 0
+    },
+    {
+      "tick": 88,
+      "tick_spacing": 1,
+      "array_start_index": 88,
+      "offset_in_array": 0,
+      "array_pda_seed_tick": 88
+    },
+    {
+      "tick": 0,
+      "tick_spacing": 10,
+      "array_start_index": 0,
+      "offset_in_array": 0,
+      "array_pda_seed_tick": 0
+    },
+    {
+      "tick": 879,
+      "tick_spacing": 10,
+      "array_start_index": 0,
+      "offset_in_array": 87,
+      "array_pda_seed_tick": 0
+    },
+    {
+      "tick": 880,
+      "tick_spacing": 10,
+      "array_start_index": 880,
+      "offset_in_array": 0,
+      "array_pda_seed_tick": 880
+    },
+    {
+      "tick": 199,
+      "tick_spacing": 200,
+      "array_start_index": 0,
+      "offset_in_array": 0,
+      "array_pda_seed_tick": 0
+    },
+    {
+      "tick": 200,
+      "tick_spacing": 200,
+      "array_start_index": 0,
+      "offset_in_array": 1,
+      "array_pda_seed_tick": 0
+    }
+  ],
+  "swap_step": [
+    {
+      "name": "typical_step_zeroForOne_solana",
+      "inputs": {
+        "sqrt_price_current_x64": "18446744073709551616",
+        "sqrt_price_target_x64": "18391489527427947882",
+        "liquidity": 1000000000000000000,
+        "amount_remaining": 1000000000000000,
+        "fee": 3000
+      },
+      "expected": {
+        "sqrt_price_next_x64": "18428370987834680440",
+        "amount_in": 997000000000000,
+        "amount_out": 996006981039903,
+        "fee_amount": 3000000000000
+      }
+    },
+    {
+      "name": "typical_step_oneForZero_solana",
+      "inputs": {
+        "sqrt_price_current_x64": "18446744073709551616",
+        "sqrt_price_target_x64": "18502164624211761447",
+        "liquidity": 1000000000000000000,
+        "amount_remaining": 1000000000000000,
+        "fee": 3000
+      },
+      "expected": {
+        "sqrt_price_next_x64": "18465135477551040038",
+        "amount_in": 997000000000000,
+        "amount_out": 996006981039903,
+        "fee_amount": 3000000000000
+      }
+    },
+    {
+      "name": "small_amount_no_cross_solana",
+      "inputs": {
+        "sqrt_price_current_x64": "18446744073709551616",
+        "sqrt_price_target_x64": "18391489527427947882",
+        "liquidity": 1000000000000000000,
+        "amount_remaining": 1000,
+        "fee": 3000
+      },
+      "expected": {
+        "sqrt_price_next_x64": "18446744073709533225",
+        "amount_in": 997,
+        "amount_out": 996,
+        "fee_amount": 3
+      }
+    },
+    {
+      "name": "stablecoin_step_0.01pct_solana",
+      "inputs": {
+        "sqrt_price_current_x64": "18446744073709551616",
+        "sqrt_price_target_x64": "18445821805675392311",
+        "liquidity": 1000000000000000000,
+        "amount_remaining": 1000000000000,
+        "fee": 100
+      },
+      "expected": {
+        "sqrt_price_next_x64": "18446725628828595351",
+        "amount_in": 999900000000,
+        "amount_out": 999899000200,
+        "fee_amount": 100000000
+      }
+    }
+  ],
+  "amount_calculations": [
+    {
+      "name": "narrow_range_parity",
+      "inputs": {
+        "tick_lower": -60,
+        "tick_upper": 60,
+        "liquidity": 1000000000000000000,
+        "sqrt_price_lower_x64": "18391489527427947882",
+        "sqrt_price_upper_x64": "18502164624211761447"
+      },
+      "expected": {
+        "amount0_round_down": 5999709018652706,
+        "amount0_round_up": 5999709018652707,
+        "amount1_round_down": 5999709018652706,
+        "amount1_round_up": 5999709018652707
+      }
+    },
+    {
+      "name": "wide_range",
+      "inputs": {
+        "tick_lower": -600,
+        "tick_upper": 600,
+        "liquidity": 1000000000000000000,
+        "sqrt_price_lower_x64": "17901587245414554125",
+        "sqrt_price_upper_x64": "19008502556559666132"
+      },
+      "expected": {
+        "amount0_round_down": 60005999255049926,
+        "amount0_round_up": 60005999255049927,
+        "amount1_round_down": 60005999255049926,
+        "amount1_round_up": 60005999255049927
+      }
+    },
+    {
+      "name": "near_full_range",
+      "inputs": {
+        "tick_lower": -887220,
+        "tick_upper": 887220,
+        "liquidity": 1000000000000000,
+        "sqrt_price_lower_x64": "1",
+        "sqrt_price_upper_x64": "339386068971326432642038657855931298473"
+      },
+      "expected": {
+        "amount0_round_down": 18446744073709551615999999999999999,
+        "amount0_round_up": 18446744073709551616000000000000000,
+        "amount1_round_down": 18398155664501368265872409502727663,
+        "amount1_round_up": 18398155664501368265872409502727664
+      }
+    }
+  ],
+  "fee_growth": [
+    {
+      "name": "basic_fee_growth_solana",
+      "inputs": {
+        "fee_amount": 1000000000000000,
+        "liquidity": 1000000000000000000
+      },
+      "expected": {
+        "fee_growth_x64": "18446744073709551"
+      }
+    },
+    {
+      "name": "small_fee_high_liquidity_solana",
+      "inputs": {
+        "fee_amount": 100,
+        "liquidity": 1000000000000000000000000
+      },
+      "expected": {
+        "fee_growth_x64": "0"
+      }
+    }
+  ]
+}

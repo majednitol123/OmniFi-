@@ -1,0 +1,61 @@
+name: CI - Solana Programs
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    paths:
+      - 'chains/solana/**'
+      - '.github/workflows/ci-solana.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  solana:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.83.0
+          components: rustfmt, clippy
+
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: 'chains/solana -> target'
+
+      - name: Check Formatting
+        run: |
+          cd chains/solana
+          cargo fmt --all -- --check
+
+      - name: Clippy Linter
+        run: |
+          cd chains/solana
+          cargo clippy --all-targets -- -D warnings
+
+      - name: Cargo Unit & Property Tests
+        run: |
+          cd chains/solana
+          cargo test
+
+      - name: Install Node.js & pnpm
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: '9.15.4'
+
+      - name: Run Anchor Integration Tests
+        run: |
+          cd chains/solana
+          pnpm install
+          npx ts-mocha -p ./tsconfig.json tests/integration.test.ts

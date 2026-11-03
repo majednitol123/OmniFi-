@@ -1,0 +1,404 @@
+{
+  "metadata": {
+    "generator": "omnifi-v2-reference-model",
+    "version": "1.0",
+    "spec": "evm-v2-spec.md",
+    "fee_denominator": 1000000,
+    "minimum_liquidity": 1000,
+    "description": "Deterministic test vectors for V2 constant-product AMM"
+  },
+  "swap_exact_input": [
+    {
+      "name": "typical_swap_0.30pct",
+      "inputs": {
+        "reserve_in": 1000000000000,
+        "reserve_out": 1000000000000,
+        "amount_in": 1000000000,
+        "fee": 3000,
+        "protocol_fee_fraction": 0
+      },
+      "expected": {
+        "amount_in": 1000000000,
+        "fee_amount": 3000000,
+        "lp_fee": 3000000,
+        "protocol_fee": 0,
+        "amount_in_after_fee": 997000000,
+        "amount_out": 996006981,
+        "new_reserve_in": 1000997000000,
+        "new_reserve_out": 999003993019,
+        "k_before": "1000000000000000000000000",
+        "k_after": "1000000000000039943000000"
+      }
+    },
+    {
+      "name": "small_swap_large_pool",
+      "inputs": {
+        "reserve_in": 1000000000000000000,
+        "reserve_out": 1000000000000000000,
+        "amount_in": 1000,
+        "fee": 3000,
+        "protocol_fee_fraction": 0
+      },
+      "expected": {
+        "amount_in": 1000,
+        "fee_amount": 3,
+        "lp_fee": 3,
+        "protocol_fee": 0,
+        "amount_in_after_fee": 997,
+        "amount_out": 996,
+        "new_reserve_in": 1000000000000000997,
+        "new_reserve_out": 999999999999999004,
+        "k_before": "1000000000000000000000000000000000000",
+        "k_after": "1000000000000000000999999999999006988"
+      }
+    },
+    {
+      "name": "large_swap_high_impact",
+      "inputs": {
+        "reserve_in": 1000000000000000000,
+        "reserve_out": 1000000000000000000,
+        "amount_in": 500000000000000000,
+        "fee": 3000,
+        "protocol_fee_fraction": 0
+      },
+      "expected": {
+        "amount_in": 500000000000000000,
+        "fee_amount": 1500000000000000,
+        "lp_fee": 1500000000000000,
+        "protocol_fee": 0,
+        "amount_in_after_fee": 498500000000000000,
+        "amount_out": 332665999332665999,
+        "new_reserve_in": 1498500000000000000,
+        "new_reserve_out": 667334000667334001,
+        "k_before": "1000000000000000000000000000000000000",
+        "k_after": "1000000000000000000498500000000000000"
+      }
+    },
+    {
+      "name": "swap_with_protocol_fee",
+      "inputs": {
+        "reserve_in": 1000000000000000000,
+        "reserve_out": 1000000000000000000,
+        "amount_in": 1000000000000000,
+        "fee": 3000,
+        "protocol_fee_fraction": 1
+      },
+      "expected": {
+        "amount_in": 1000000000000000,
+        "fee_amount": 3000000000000,
+        "lp_fee": 2250000000000,
+        "protocol_fee": 750000000000,
+        "amount_in_after_fee": 997000000000000,
+        "amount_out": 996006981039903,
+        "new_reserve_in": 1000997000000000000,
+        "new_reserve_out": 999003993018960097,
+        "k_before": "1000000000000000000000000000000000000",
+        "k_after": "1000000000000000000216709000000000000"
+      }
+    },
+    {
+      "name": "stablecoin_swap_0.01pct",
+      "inputs": {
+        "reserve_in": 1000000000000,
+        "reserve_out": 1000000000000,
+        "amount_in": 1000000000,
+        "fee": 100,
+        "protocol_fee_fraction": 0
+      },
+      "expected": {
+        "amount_in": 1000000000,
+        "fee_amount": 100000,
+        "lp_fee": 100000,
+        "protocol_fee": 0,
+        "amount_in_after_fee": 999900000,
+        "amount_out": 998901198,
+        "new_reserve_in": 1000999900000,
+        "new_reserve_out": 999001098802,
+        "k_before": "1000000000000000000000000",
+        "k_after": "1000000000000692119800000"
+      }
+    },
+    {
+      "name": "exotic_swap_1.00pct",
+      "inputs": {
+        "reserve_in": 1000000000000000000,
+        "reserve_out": 1000000000000,
+        "amount_in": 1000000000000000,
+        "fee": 10000,
+        "protocol_fee_fraction": 0
+      },
+      "expected": {
+        "amount_in": 1000000000000000,
+        "fee_amount": 10000000000000,
+        "lp_fee": 10000000000000,
+        "protocol_fee": 0,
+        "amount_in_after_fee": 990000000000000,
+        "amount_out": 989020869,
+        "new_reserve_in": 1000990000000000000,
+        "new_reserve_out": 999010979131,
+        "k_before": "1000000000000000000000000000000",
+        "k_after": "1000000000000339690000000000000"
+      }
+    },
+    {
+      "name": "asymmetric_reserves",
+      "inputs": {
+        "reserve_in": 1000000,
+        "reserve_out": 1000000000000000000,
+        "amount_in": 10000,
+        "fee": 500,
+        "protocol_fee_fraction": 0
+      },
+      "expected": {
+        "amount_in": 10000,
+        "fee_amount": 5,
+        "lp_fee": 5,
+        "protocol_fee": 0,
+        "amount_in_after_fee": 9995,
+        "amount_out": 9896088594497992,
+        "new_reserve_in": 1009995,
+        "new_reserve_out": 990103911405502008,
+        "k_before": "1000000000000000000000000",
+        "k_after": "1000000000000000000569960"
+      }
+    },
+    {
+      "name": "minimum_swap",
+      "inputs": {
+        "reserve_in": 1000000000000000000,
+        "reserve_out": 1000000000000000000,
+        "amount_in": 100,
+        "fee": 3000,
+        "protocol_fee_fraction": 0
+      },
+      "expected": {
+        "amount_in": 100,
+        "fee_amount": 1,
+        "lp_fee": 1,
+        "protocol_fee": 0,
+        "amount_in_after_fee": 99,
+        "amount_out": 98,
+        "new_reserve_in": 1000000000000000099,
+        "new_reserve_out": 999999999999999902,
+        "k_before": "1000000000000000000000000000000000000",
+        "k_after": "1000000000000000000999999999999990298"
+      }
+    }
+  ],
+  "swap_exact_output": [
+    {
+      "name": "typical_exact_output",
+      "inputs": {
+        "reserve_in": 1000000000000000000,
+        "reserve_out": 1000000000000000000,
+        "amount_out": 1000000000000000,
+        "fee": 3000,
+        "protocol_fee_fraction": 0
+      },
+      "expected": {
+        "amount_in": 1004013040121367,
+        "fee_amount": 3012039120365,
+        "lp_fee": 3012039120365,
+        "protocol_fee": 0,
+        "amount_in_net": 1001001001001002,
+        "amount_out": 1000000000000000,
+        "new_reserve_in": 1001001001001001002,
+        "new_reserve_out": 999000000000000000,
+        "k_before": "1000000000000000000000000000000000000",
+        "k_after": "1000000000000000000998000000000000000"
+      }
+    },
+    {
+      "name": "exact_output_with_protocol_fee",
+      "inputs": {
+        "reserve_in": 1000000000000000000,
+        "reserve_out": 1000000000000000000,
+        "amount_out": 1000000000000000,
+        "fee": 3000,
+        "protocol_fee_fraction": 1
+      },
+      "expected": {
+        "amount_in": 1004013040121367,
+        "fee_amount": 3012039120365,
+        "lp_fee": 2259029340274,
+        "protocol_fee": 753009780091,
+        "amount_in_net": 1001001001001002,
+        "amount_out": 1000000000000000,
+        "new_reserve_in": 1001001001001001002,
+        "new_reserve_out": 999000000000000000,
+        "k_before": "1000000000000000000000000000000000000",
+        "k_after": "1000000000000000000998000000000000000"
+      }
+    },
+    {
+      "name": "small_exact_output",
+      "inputs": {
+        "reserve_in": 1000000000000000000,
+        "reserve_out": 1000000000000000000,
+        "amount_out": 1000,
+        "fee": 3000,
+        "protocol_fee_fraction": 0
+      },
+      "expected": {
+        "amount_in": 1005,
+        "fee_amount": 4,
+        "lp_fee": 4,
+        "protocol_fee": 0,
+        "amount_in_net": 1001,
+        "amount_out": 1000,
+        "new_reserve_in": 1000000000000001001,
+        "new_reserve_out": 999999999999999000,
+        "k_before": "1000000000000000000000000000000000000",
+        "k_after": "1000000000000000000999999999998999000"
+      }
+    }
+  ],
+  "add_liquidity_initial": [
+    {
+      "name": "balanced_initial",
+      "inputs": {
+        "amount0": 1000000000000000000,
+        "amount1": 1000000000000000000
+      },
+      "expected": {
+        "amount0": 1000000000000000000,
+        "amount1": 1000000000000000000,
+        "lp_minted_total": 1000000000000000000,
+        "lp_minted_user": 999999999999999000,
+        "lp_burned": 1000,
+        "reserve0": 1000000000000000000,
+        "reserve1": 1000000000000000000,
+        "total_supply": 1000000000000000000
+      }
+    },
+    {
+      "name": "asymmetric_initial",
+      "inputs": {
+        "amount0": 1000000,
+        "amount1": 1000000000000000000
+      },
+      "expected": {
+        "amount0": 1000000,
+        "amount1": 1000000000000000000,
+        "lp_minted_total": 1000000000000,
+        "lp_minted_user": 999999999000,
+        "lp_burned": 1000,
+        "reserve0": 1000000,
+        "reserve1": 1000000000000000000,
+        "total_supply": 1000000000000
+      }
+    },
+    {
+      "name": "small_initial",
+      "inputs": {
+        "amount0": 100000,
+        "amount1": 100000
+      },
+      "expected": {
+        "amount0": 100000,
+        "amount1": 100000,
+        "lp_minted_total": 100000,
+        "lp_minted_user": 99000,
+        "lp_burned": 1000,
+        "reserve0": 100000,
+        "reserve1": 100000,
+        "total_supply": 100000
+      }
+    }
+  ],
+  "add_liquidity_subsequent": [
+    {
+      "name": "proportional_add",
+      "inputs": {
+        "reserve0": 1000000000000000000,
+        "reserve1": 1000000000000000000,
+        "total_supply": 1000000000000000000,
+        "amount0": 1000000000000000,
+        "amount1": 1000000000000000
+      },
+      "expected": {
+        "amount0_desired": 1000000000000000,
+        "amount1_desired": 1000000000000000,
+        "lp_minted": 1000000000000000,
+        "actual_amount0": 1000000000000000,
+        "actual_amount1": 1000000000000000,
+        "new_reserve0": 1001000000000000000,
+        "new_reserve1": 1001000000000000000,
+        "new_total_supply": 1001000000000000000
+      }
+    },
+    {
+      "name": "imbalanced_add",
+      "inputs": {
+        "reserve0": 1000000000000000000,
+        "reserve1": 2000000000000000000,
+        "total_supply": 1000000000000000000,
+        "amount0": 1000000000000000,
+        "amount1": 1000000000000000
+      },
+      "expected": {
+        "amount0_desired": 1000000000000000,
+        "amount1_desired": 1000000000000000,
+        "lp_minted": 500000000000000,
+        "actual_amount0": 500000000000000,
+        "actual_amount1": 1000000000000000,
+        "new_reserve0": 1000500000000000000,
+        "new_reserve1": 2001000000000000000,
+        "new_total_supply": 1000500000000000000
+      }
+    }
+  ],
+  "remove_liquidity": [
+    {
+      "name": "partial_remove",
+      "inputs": {
+        "reserve0": 1000000000000000000,
+        "reserve1": 1000000000000000000,
+        "total_supply": 1000000000000000000,
+        "lp_burned": 1000000000000000
+      },
+      "expected": {
+        "lp_burned": 1000000000000000,
+        "amount0": 1000000000000000,
+        "amount1": 1000000000000000,
+        "new_reserve0": 999000000000000000,
+        "new_reserve1": 999000000000000000,
+        "new_total_supply": 999000000000000000
+      }
+    },
+    {
+      "name": "large_remove",
+      "inputs": {
+        "reserve0": 1000000000000000000,
+        "reserve1": 1000000000000000000,
+        "total_supply": 1000000000000000000,
+        "lp_burned": 999999999999999000
+      },
+      "expected": {
+        "lp_burned": 999999999999999000,
+        "amount0": 999999999999999000,
+        "amount1": 999999999999999000,
+        "new_reserve0": 1000,
+        "new_reserve1": 1000,
+        "new_total_supply": 1000
+      }
+    },
+    {
+      "name": "asymmetric_remove",
+      "inputs": {
+        "reserve0": 1000000,
+        "reserve1": 1000000000000000000,
+        "total_supply": 1000000000000,
+        "lp_burned": 1000000000
+      },
+      "expected": {
+        "lp_burned": 1000000000,
+        "amount0": 1000,
+        "amount1": 1000000000000000,
+        "new_reserve0": 999000,
+        "new_reserve1": 999000000000000000,
+        "new_total_supply": 999000000000
+      }
+    }
+  ]
+}

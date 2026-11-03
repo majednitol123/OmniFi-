@@ -1,0 +1,110 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+      "id": 1,
+      "title": "OmniFi HTTP Request Throughput & Error Rate",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "sum(rate(omnifi_http_requests_total[1m])) by (status)",
+          "legendFormat": "Status {{status}}"
+        }
+      ]
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "id": 2,
+      "title": "Quote Latency Percentiles (p50 / p95 / p99)",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.50, sum(rate(omnifi_quote_latency_seconds_bucket[5m])) by (le))",
+          "legendFormat": "p50 Latency"
+        },
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(omnifi_quote_latency_seconds_bucket[5m])) by (le))",
+          "legendFormat": "p95 Latency"
+        },
+        {
+          "expr": "histogram_quantile(0.99, sum(rate(omnifi_quote_latency_seconds_bucket[5m])) by (le))",
+          "legendFormat": "p99 Latency"
+        }
+      ]
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 6, "w": 8, "x": 0, "y": 8 },
+      "id": 3,
+      "title": "Active Reconciliation Drift Incidents",
+      "type": "stat",
+      "targets": [
+        {
+          "expr": "omnifi_reconciliation_drift_count",
+          "legendFormat": "Active Discrepancies"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "red", "value": 1 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 6, "w": 8, "x": 8, "y": 8 },
+      "id": 4,
+      "title": "RPC Node Health & Circuit Breakers",
+      "type": "stat",
+      "targets": [
+        {
+          "expr": "omnifi_rpc_provider_status",
+          "legendFormat": "{{provider}} ({{network}})"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            { "options": { "0": { "color": "red", "text": "OPEN / FAILING" }, "1": { "color": "green", "text": "HEALTHY" } }, "type": "value" }
+          ]
+        }
+      }
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 6, "w": 8, "x": 16, "y": 8 },
+      "id": 5,
+      "title": "Blockchain Reorganization Depth",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "omnifi_reorg_depth_blocks",
+          "legendFormat": "Depth ({{network}})"
+        }
+      ]
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": ["omnifi", "dex", "production"],
+  "time": { "from": "now-1h", "to": "now" },
+  "title": "OmniFi Protocol Telemetry & Operations Hardening",
+  "uid": "omnifi-ops-prod"
+}
+

@@ -1,0 +1,40 @@
+{
+  "name": "omnifi",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Non-custodial multi-chain DEX with independently engineered EVM and Solana implementations",
+  "license": "SEE LICENSE",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@9.15.4",
+  "scripts": {
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "format": "prettier --write \"**/*.{ts,tsx,js,json,md,yml,yaml}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,json,md,yml,yaml}\"",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "test:evm": "cd chains/evm && forge test",
+    "test:solana": "cd chains/solana && cargo test",
+    "test:all": "pnpm test && pnpm test:evm && pnpm test:solana",
+    "security:secrets": "gitleaks detect --config .gitleaks.toml --verbose --no-git",
+    "security:evm": "cd chains/evm && forge test && aderyn .",
+    "security:slither": "cd chains/evm && (slither . --config-file slither.config.json --json slither-report.json || test -s slither-report.json)",
+    "security:solana": "cd chains/solana && cargo test && cargo audit && cargo deny check",
+    "security:deps": "node scripts/security-audit-deps.mjs",
+    "security:infra": "trivy fs --config trivy.yaml --scanners misconfig,secret .",
+    "security:invariants": "cd chains/evm && forge test --match-test \"invariant_\" --evm-version cancun",
+    "security:regression": "cd chains/evm && forge test --match-path test/security/SecurityRegression.t.sol --evm-version cancun",
+    "security:all": "pnpm security:secrets && pnpm security:deps && pnpm security:evm && pnpm security:slither && pnpm security:solana && pnpm security:infra && pnpm security:invariants && pnpm security:regression"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "prettier": "^3.4.2",
+    "tsx": "^4.23.15",
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.3"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "releaseStage": "production-controlled",
+  "effectiveDate": "2026-11-01T00:00:00Z",
+  "globalGuardrails": {
+    "maxTvlPerPoolUsd": "1000000",
+    "maxSingleSwapUsd": "50000",
+    "circuitBreakerThresholdBps": 1500,
+    "maxSlippageBps": 500,
+    "defaultSlippageBps": 50,
+    "poolCreationRestricted": true,
+    "emergencyPauseEnabled": true,
+    "rateLimiting": {
+      "maxRequestsPerMinutePerIp": 120,
+      "maxSimulatePerMinute": 30
+    }
+  },
+  "networks": {
+    "eip155:1": {
+      "name": "Ethereum Mainnet",
+      "enabled": true,
+      "maxTvlPerPoolUsd": "1000000",
+      "maxSingleSwapUsd": "50000",
+      "poolCreationRestricted": true,
+      "flashLoanEnabled": false,
+      "privateTxRelayRequired": false
+    },
+    "eip155:8453": {
+      "name": "Base Mainnet",
+      "enabled": true,
+      "maxTvlPerPoolUsd": "1000000",
+      "maxSingleSwapUsd": "50000",
+      "poolCreationRestricted": true,
+      "flashLoanEnabled": false,
+      "privateTxRelayRequired": false
+    },
+    "solana:mainnet-beta": {
+      "name": "Solana Mainnet-Beta",
+      "enabled": true,
+      "maxTvlPerPoolUsd": "1000000",
+      "maxSingleSwapUsd": "50000",
+      "poolCreationRestricted": true,
+      "flashLoanEnabled": false,
+      "jitoBundleProtectionEnabled": true
+    }
+  },
+  "rampUpSchedule": [
+    {
+      "phase": "Phase 1: Bootstrapping (Weeks 1-2)",
+      "maxTvlPerPoolUsd": "1000000",
+      "maxSingleSwapUsd": "50000",
+      "poolCreationRestricted": true
+    },
+    {
+      "phase": "Phase 2: Growth (Weeks 3-4)",
+      "maxTvlPerPoolUsd": "5000000",
+      "maxSingleSwapUsd": "250000",
+      "poolCreationRestricted": true
+    },
+    {
+      "phase": "Phase 3: Open Protocol (Week 5+)",
+      "maxTvlPerPoolUsd": "unlimited",
+      "maxSingleSwapUsd": "unlimited",
+      "poolCreationRestricted": false
+    }
+  ]
+}
+

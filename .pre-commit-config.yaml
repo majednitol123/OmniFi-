@@ -1,0 +1,39 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.4
+    hooks:
+      - id: gitleaks
+
+  - repo: local
+    hooks:
+      - id: forge-fmt
+        name: Forge Format Check
+        entry: bash -c "cd chains/evm && forge fmt --check"
+        language: system
+        files: '^chains/evm/.*\.(sol)$'
+        pass_filenames: false
+
+      - id: cargo-fmt
+        name: Cargo Format Check
+        entry: bash -c "cd chains/solana && cargo fmt --all -- --check"
+        language: system
+        files: '^chains/solana/.*\.rs$'
+        pass_filenames: false
+
+      - id: prettier
+        name: Prettier Check
+        entry: pnpm format:check
+        language: system
+        files: '\.(ts|tsx|js|jsx|json|md|yaml|yml)$'
+        pass_filenames: false
+

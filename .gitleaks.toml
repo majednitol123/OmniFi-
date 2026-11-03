@@ -1,0 +1,46 @@
+# OmniFi Protocol — Gitleaks Configuration
+# Enforces pre-commit and CI secret scanning across monorepo commits
+
+title = "OmniFi Gitleaks Config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Global allowlists for public token addresses, test fixtures, documentation, and build artifacts"
+paths = [
+    '''(^|/)node_modules/''',
+    '''(^|/)target/''',
+    '''(^|/)out/''',
+    '''(^|/)cache/''',
+    '''(^|/)\.git/''',
+    '''(^|/)\.turbo/''',
+    '''(^|/)\.next/''',
+    '''(^|/)dist/''',
+    '''\.(png|jpg|jpeg|gif|svg|ico|pdf|zip|tar\.gz|wasm|so|dylib)$''',
+    '''chains/evm/test/''',
+    '''chains/solana/tests/''',
+    '''deployments/production/.*\.json''',
+    '''docs/.*\.md''',
+    '''README\.md''',
+    '''scripts/test-docker-stack\.sh''',
+    '''packages/sdk-unified/examples/''',
+    '''services/quote-api/src/openapi/''',
+    '''services/quote-api/src/__tests__/''',
+    '''packages/sdk-unified/src/__tests__/'''
+]
+
+regexes = [
+    # Public EVM standard contract addresses (e.g. USDC, WETH, USDT)
+    '''0x[a-fA-F0-9]{40}''',
+    # Public Solana base58 mint addresses
+    '''[1-9A-HJ-NP-Za-km-z]{43,44}'''
+]
+
+stopwords = [
+    "omnifi_dev_password",
+    "amount0Desired",
+    "amount1Desired",
+    "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
+    "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d"
+]

@@ -1,0 +1,58 @@
+groups:
+  - name: omnifi_production_alerts
+    rules:
+      - alert: OmniFiHighHttpErrorRate
+        expr: (sum(rate(omnifi_http_requests_total{status=~"5.."}[5m])) / sum(rate(omnifi_http_requests_total[5m]))) * 100 > 5
+        for: 2m
+        labels:
+          severity: critical
+          tier: P1
+        annotations:
+          summary: "OmniFi API 5xx error rate exceeds 5% on active routes"
+          description: "Over 5% of all HTTP requests returned 5xx server errors in the last 5 minutes."
+          runbook_url: "https://docs.omnifi.finance/runbooks/RB-004-rpc-failover.md"
+
+      - alert: OmniFiReconciliationDriftDetected
+        expr: omnifi_reconciliation_drift_count > 0
+        for: 1m
+        labels:
+          severity: critical
+          tier: P1
+        annotations:
+          summary: "CRITICAL: Accounting discrepancy detected between vault reserves and tracked balances"
+          description: "Active balance discrepancy detected across one or more pools. Immediate on-chain state inspection required."
+          runbook_url: "https://docs.omnifi.finance/runbooks/RB-002-reconciliation-drift.md"
+
+      - alert: OmniFiDeepReorgDetected
+        expr: omnifi_reorg_depth_blocks > 5
+        for: 0m
+        labels:
+          severity: critical
+          tier: P1
+        annotations:
+          summary: "Deep blockchain reorg detected exceeding safety window"
+          description: "Network {{ $labels.network }} experienced a reorganization depth of {{ $value }} blocks. State rewind triggered."
+          runbook_url: "https://docs.omnifi.finance/runbooks/RB-003-indexer-reorg-recovery.md"
+
+      - alert: OmniFiRpcProviderDegraded
+        expr: omnifi_rpc_provider_status == 0
+        for: 1m
+        labels:
+          severity: warning
+          tier: P2
+        annotations:
+          summary: "RPC node circuit breaker tripped for provider {{ $labels.provider }}"
+          description: "Provider {{ $labels.provider }} on network {{ $labels.network }} is failing health checks or tripping circuit breaker."
+          runbook_url: "https://docs.omnifi.finance/runbooks/RB-004-rpc-failover.md"
+
+      - alert: OmniFiHighQuoteLatency
+        expr: histogram_quantile(0.95, sum(rate(omnifi_quote_latency_seconds_bucket[5m])) by (le)) > 0.25
+        for: 3m
+        labels:
+          severity: warning
+          tier: P2
+        annotations:
+          summary: "Quote calculation 95th percentile latency exceeds 250ms"
+          description: "Dijkstra graph traversal and optimal path evaluation latency has degraded."
+          runbook_url: "https://docs.omnifi.finance/runbooks/RB-004-rpc-failover.md"
+

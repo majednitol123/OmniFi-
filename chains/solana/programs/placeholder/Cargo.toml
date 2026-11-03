@@ -1,0 +1,24 @@
+[package]
+name = "placeholder"
+version = "0.1.0"
+description = "Placeholder Anchor program for toolchain verification"
+license = "MIT OR Apache-2.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "placeholder"
+
+[features]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+cpi = ["no-entrypoint"]
+default = []
+idl-build = ["anchor-lang/idl-build"]
+
+[dependencies]
+anchor-lang = "0.32.1"
+
+[lints]
+workspace = true

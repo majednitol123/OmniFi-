@@ -1,0 +1,17 @@
+testMode: assertion
+testLimit: 50000
+shrinkLimit: 5000
+seqLen: 100
+corpusDir: "echidna-corpus"
+coverage: true
+solcArgs: "--evm-version cancun"
+sender:
+  - "0x1000000000000000000000000000000000000001"
+  - "0x2000000000000000000000000000000000000002"
+  - "0x3000000000000000000000000000000000000003"
+balanceContract: 1000000000000000000000000
+allContracts: false
+deployer: "0x3000000000000000000000000000000000000003"
+quiet: false
+format: "text"
+

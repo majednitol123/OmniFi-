@@ -1,0 +1,24 @@
+# Global default owners
+* @omnifi/leads
+
+# Chains
+chains/evm/ @omnifi/evm-team
+chains/solana/ @omnifi/solana-team
+
+# Shared Domain & API
+packages/domain/ @omnifi/core-team
+packages/config/ @omnifi/core-team
+packages/token-registry/ @omnifi/core-team
+packages/api-client/ @omnifi/core-team
+packages/test-vectors/ @omnifi/core-team
+
+# Services & Routing
+services/ @omnifi/backend-team
+
+# CI / Infrastructure / Security
+.github/ @omnifi/security-team
+deployments/ @omnifi/infra-team
+scripts/ @omnifi/infra-team
+docs/security/ @omnifi/security-team
+.gitleaks.toml @omnifi/security-team
+

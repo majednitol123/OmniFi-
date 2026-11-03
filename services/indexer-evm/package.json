@@ -1,0 +1,29 @@
+{
+  "name": "@omnifi/indexer-evm",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts",
+    "test": "vitest run",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@omnifi/config": "workspace:*",
+    "@omnifi/database": "workspace:*",
+    "@omnifi/domain": "workspace:*",
+    "@omnifi/sdk-evm": "workspace:*",
+    "viem": "^2.57.14"
+  },
+  "devDependencies": {
+    "@omnifi/eslint-config": "workspace:*",
+    "@omnifi/prettier-config": "workspace:*",
+    "@types/node": "^20.11.0",
+    "typescript": "^5.7.3",
+    "vitest": "^2.1.8"
+  }
+}
+

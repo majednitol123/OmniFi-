@@ -1,0 +1,258 @@
+openapi: 3.1.0
+info:
+  title: OmniFi DEX REST API
+  description: Canonical REST API interface for OmniFi Multi-Chain DEX
+  version: 1.0.0
+servers:
+  - url: /api/v1
+    description: OmniFi v1 API
+
+paths:
+  /health:
+    get:
+      summary: Health check endpoint
+      operationId: getHealth
+      responses:
+        '200':
+          description: Service healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+
+  /networks:
+    get:
+      summary: List supported networks
+      operationId: listNetworks
+      responses:
+        '200':
+          description: List of networks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NetworkSummary'
+
+  /tokens:
+    get:
+      summary: List registered tokens
+      operationId: listTokens
+      parameters:
+        - name: networkId
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: riskTier
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [verified, unverified, blocked]
+      responses:
+        '200':
+          description: List of token entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TokenResponse'
+
+  /tokens/{assetRef}:
+    get:
+      summary: Get token details by canonical AssetRef
+      operationId: getToken
+      parameters:
+        - name: assetRef
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 'eip155:1:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+      responses:
+        '200':
+          description: Token details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '404':
+          description: Token not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+
+  /quote:
+    post:
+      summary: Request swap quote across pools
+      operationId: getQuote
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuoteRequest'
+      responses:
+        '200':
+          description: Swap quote result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuoteResponse'
+        '400':
+          description: Invalid request or insufficient liquidity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      required:
+        - status
+        - timestamp
+        - version
+      properties:
+        status:
+          type: string
+          enum: [ok, degraded, maintenance]
+        timestamp:
+          type: string
+          format: date-time
+        version:
+          type: string
+
+    NetworkSummary:
+      type: object
+      required:
+        - id
+        - displayName
+        - namespace
+        - chainRef
+        - isTestnet
+      properties:
+        id:
+          type: string
+        displayName:
+          type: string
+        namespace:
+          type: string
+          enum: [eip155, solana]
+        chainRef:
+          type: string
+        isTestnet:
+          type: boolean
+
+    TokenResponse:
+      type: object
+      required:
+        - assetRef
+        - name
+        - symbol
+        - decimals
+        - riskTier
+      properties:
+        assetRef:
+          type: string
+          example: 'eip155:1:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+        name:
+          type: string
+        symbol:
+          type: string
+        decimals:
+          type: integer
+          minimum: 0
+          maximum: 255
+        riskTier:
+          type: string
+          enum: [verified, unverified, blocked]
+        logoUri:
+          type: string
+        blockReason:
+          type: string
+
+    QuoteRequest:
+      type: object
+      required:
+        - tokenIn
+        - tokenOut
+        - amount
+        - exactIn
+      properties:
+        tokenIn:
+          type: string
+          description: Canonical AssetRef of input token
+        tokenOut:
+          type: string
+          description: Canonical AssetRef of output token
+        amount:
+          type: string
+          pattern: '^[0-9]+$'
+          description: Exact integer amount string in smallest unit
+        exactIn:
+          type: boolean
+
+    QuoteResponse:
+      type: object
+      required:
+        - tokenIn
+        - tokenOut
+        - amountIn
+        - amountOut
+        - executionPrice
+        - priceImpactBps
+        - estimatedGasOrFee
+      properties:
+        tokenIn:
+          type: string
+        tokenOut:
+          type: string
+        amountIn:
+          type: string
+          pattern: '^[0-9]+$'
+        amountOut:
+          type: string
+          pattern: '^[0-9]+$'
+        executionPrice:
+          type: string
+          description: Human-readable execution price
+        priceImpactBps:
+          type: integer
+          minimum: 0
+        estimatedGasOrFee:
+          type: string
+          pattern: '^[0-9]+$'
+
+    ApiError:
+      type: object
+      required:
+        - code
+        - message
+        - userMessage
+      properties:
+        code:
+          type: integer
+          description: Stable integer error code
+        message:
+          type: string
+          description: Technical developer error message
+        userMessage:
+          type: string
+          description: User-friendly, actionable UI error message
+        chainError:
+          type: object
+          properties:
+            revertReason:
+              type: string
+            programErrorCode:
+              type: integer
+            transactionId:
+              type: string
+            blockOrSlot:
+              type: string
+

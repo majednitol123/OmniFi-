@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "packageName": "OmniFi-Protocol-Audit-Bundle",
+  "version": "1.1.0-audit-handoff",
+  "timestamp": "2026-11-03T13:15:00Z",
+  "commitHash": "a30882c8ae2d3d76018c429028e811634119e336",
+  "description": "Comprehensive security audit handoff package containing cryptographic source digests, pinned toolchains, independent audit mandate (Gate D), and post-audit remediation records.",
+  "independentAuditReadiness": {
+    "status": "READY_FOR_INDEPENDENT_AUDIT",
+    "mandatedGate": "Release Gate D",
+    "targetAuditors": [
+      "Trail of Bits",
+      "OpenZeppelin",
+      "Zellic",
+      "OtterSec",
+      "Neodyme"
+    ],
+    "handoffRfp": "docs/security/audit-scope-v1.md"
+  },
+  "toolchains": {
+    "solidity": {
+      "compiler": "solc",
+      "version": "0.8.26",
+      "evmVersion": "cancun",
+      "optimizerRuns": 200,
+      "viaIR": false
+    },
+    "foundry": {
+      "toolchain": "foundry-rs/foundry-toolchain",
+      "version": "v1.4.4",
+      "profile": "default"
+    },
+    "rust": {
+      "version": "1.89.0",
+      "channel": "stable",
+      "target": "bpfel-unknown-unknown"
+    },
+    "anchor": {
+      "version": "0.32.1",
+      "cli": "0.32.1"
+    },
+    "node": {
+      "version": "v20.18.0",
+      "pnpm": "9.15.4",
+      "typescript": "5.3.3"
+    }
+  },
+  "sourceDigests": {
+    "evmContractsTreeSha256": "947ae23179e9eaf904dad0d680fb7a9d38961741207e6c06f426948330c5da5e",
+    "solanaProgramsTreeSha256": "0c7ec052b130655ef56f0c7d733082f3a22089da4c1fe6d6a7754b9ceb4957ec",
+    "packagesTreeSha256": "0a1317d26fc9f2d87a81a52cc29f1d440f3b9d975c8b1efadfc1d92000d47a7a",
+    "servicesTreeSha256": "b76d5da84727b551043fed3d9938a4da28d7267f0a195510ee07f3a0746ee348"
+  },
+  "verificationMetrics": {
+    "evmTestSuites": 26,
+    "evmTestsPassed": 166,
+    "evmTestsFailed": 0,
+    "solanaCargoTestsPassed": 28,
+    "solanaAnchorIntegrationTestsPassed": 7,
+    "solanaTestsTotal": 35,
+    "monorepoTurboTasksPassed": 32,
+    "monorepoTurboTasksTotal": 32,
+    "securityInvariantsPassed": 9,
+    "securityRegressionTestsPassed": 11,
+    "gitleaksSecretLeaks": 0,
+    "cargoVulnerabilities": 0,
+    "trivyMisconfigurations": 0
+  },
+  "remediationRegister": {
+    "P0_CriticalReleaseBlockers": {
+      "total": 4,
+      "resolved": 4,
+      "items": [
+        "F-01: Production release authorization & cryptographic hash verification scripts hardened",
+        "F-02: EVM v4 Singleton lock accounting fixed via ACTIVE_LOCKER_SLOT isolation",
+        "F-03: Transaction preparation endpoints updated with full ABI calldata and Solana account metas",
+        "F-04: Web client timer finality replaced with on-chain receipt and signature polling"
+      ]
+    },
+    "P1_HighRiskDefects": {
+      "total": 10,
+      "resolved": 10,
+      "items": [
+        "F-05: Solana AMM protocol fee reserve deduction desynchronization fixed",
+        "F-06: Solana CLMM exact-output swap full fulfillment assertion rule enforced",
+        "F-07: SSRF vulnerability eliminated with network registry whitelist and private RPC isolation",
+        "F-08: Solana transaction simulation replaced with real RPC connection.simulateTransaction",
+        "F-09: EVM multi-hop CLMM packed path encoding and multicall routing implemented",
+        "F-10: JavaScript float arithmetic eliminated from quote calculator and split router",
+        "F-11: Solana log decoder updated to parse real Anchor Borsh event streams",
+        "F-12: Solana Token-2022 compatibility documented and SPL token mint isolation enforced",
+        "F-13: Requirements traceability matrix dead links purged (0 missing references)",
+        "F-14: Security CI workflow hardened to fail-closed on vulnerability detection"
+      ]
+    },
+    "P2_MediumSeverityDebt": {
+      "total": 7,
+      "resolved": 7,
+      "items": [
+        "P2-01: CI toolchain pinned to Foundry v1.4.4",
+        "P2-02: Solana CLMM tick array contiguity and monotonic sequence verified",
+        "P2-03: Frontend wallet cluster mismatch detection and protection",
+        "P2-04: PRD and Protocol Release Policy approved as Engineering Baseline v1.0",
+        "P2-05: Protocol Economic Specification approved in accordance with ADR-007",
+        "P2-06: V2 Factory CREATE2 determinism aligned with feature flag guardrails",
+        "P2-07: Security audit scope addendum formalizing post-audit remediations"
+      ]
+    },
+    "P3_LowSeverityPolish": {
+      "total": 7,
+      "resolved": 7,
+      "items": [
+        "P3-01: Truthful positions endpoint connected to OmniFiDatabaseClient",
+        "P3-02: Solana Anchor integration test suite implemented (7 tests)",
+        "P3-03: Production PostgreSQL relational schema DDL authored (schema.sql)",
+        "P3-04: EVM simulation custom revert error decoding and gas estimation added",
+        "P3-05: Frontend WCAG 2.2 AA accessibility and Escape key modal dismissal implemented",
+        "P3-06: Strict integer domain amount validation verified",
+        "P3-07: Audit register and phase scorecard aligned with verified engineering baseline"
+      ]
+    },
+    "P4_InformationalAndReadiness": {
+      "total": 3,
+      "resolved": 3,
+      "items": [
+        "P4-01: Phase 4 EVM V2 Reference AMM mathematical specification approved",
+        "P4-02: External audit package manifest and hash bundle authored",
+        "P4-03: Testnet stage release readiness certificate formalized"
+      ]
+    }
+  },
+  "externalAuditScope": [
+    "chains/evm/src/v2/OmniFiV2Factory.sol",
+    "chains/evm/src/v2/OmniFiV2Pair.sol",
+    "chains/evm/src/v2/OmniFiV2Router.sol",
+    "chains/evm/src/clmm/OmniFiPool.sol",
+    "chains/evm/src/clmm/OmniFiPoolFactory.sol",
+    "chains/evm/src/clmm/OmniFiPositionManager.sol",
+    "chains/evm/src/clmm/OmniFiSwapRouter.sol",
+    "chains/evm/src/v4-core/OmniFiPoolManager.sol",
+    "chains/evm/src/v4-core/libraries/TransientStorage.sol",
+    "chains/solana/programs/omnifi_amm/src/lib.rs",
+    "chains/solana/programs/omnifi_amm/src/instructions/swap.rs",
+    "chains/solana/programs/omnifi_amm/src/instructions/collect_fees.rs",
+    "chains/solana/programs/omnifi_clmm/src/lib.rs",
+    "chains/solana/programs/omnifi_clmm/src/instructions/swap.rs"
+  ]
+}
+

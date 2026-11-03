@@ -1,0 +1,39 @@
+{
+  "name": "@omnifi/quote-api",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./dist/server.js",
+  "types": "./dist/server.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts",
+    "test": "vitest run",
+    "start": "node dist/server.js"
+  },
+  "dependencies": {
+    "@fastify/cors": "^9.0.1",
+    "@fastify/rate-limit": "^9.1.0",
+    "@omnifi/config": "workspace:*",
+    "@omnifi/database": "workspace:*",
+    "@omnifi/domain": "workspace:*",
+    "@omnifi/quote-engine": "workspace:*",
+    "@omnifi/rpc-resilience": "workspace:*",
+    "@omnifi/sdk-evm": "workspace:*",
+    "@omnifi/sdk-solana": "workspace:*",
+    "@omnifi/sdk-unified": "workspace:*",
+    "@solana/web3.js": "^1.95.8",
+    "fastify": "^4.28.1",
+    "prom-client": "^15.1.3",
+    "viem": "^2.57.14",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@omnifi/eslint-config": "workspace:*",
+    "@omnifi/prettier-config": "workspace:*",
+    "@types/node": "^20.11.0",
+    "typescript": "^5.7.3",
+    "vitest": "^2.1.8"
+  }
+}
+

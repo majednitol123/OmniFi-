@@ -1,0 +1,38 @@
+# OmniFi — Cargo Deny Configuration
+# Documented per OmniFi Supply Chain Security Specification
+
+[advisories]
+version = 2
+ignore = [
+    # Transitive unmaintained dependencies from solana-program/anchor-spl
+    "RUSTSEC-2025-0161", # libsecp256k1
+    "RUSTSEC-2025-0141", # bincode
+    "RUSTSEC-2026-0097", # rand
+]
+
+[bans]
+multiple-versions = "warn"
+deny = []
+
+[licenses]
+version = 2
+allow = [
+    "MIT",
+    "Apache-2.0",
+    "BSD-3-Clause",
+    "BSD-2-Clause",
+    "ISC",
+    "Unicode-3.0",
+    "Unicode-DFS-2016",
+    "OpenSSL",
+    "Zlib",
+    "CC0-1.0",
+    "BSL-1.0",
+]
+confidence-threshold = 0.8
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "warn"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]
+allow-git = []

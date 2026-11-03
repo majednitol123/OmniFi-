@@ -1,0 +1,11 @@
+node_modules
+**/node_modules
+.git
+.turbo
+.next
+chains/solana/target
+chains/evm/cache
+chains/evm/out
+cache
+*.log
+.DS_Store

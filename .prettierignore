@@ -1,0 +1,13 @@
+node_modules
+dist
+out
+target
+.next
+.turbo
+*.so
+*.jsonl
+packages/test-vectors/**/*.json
+chains/evm/lib
+docs/
+*.md
+pnpm-lock.yaml

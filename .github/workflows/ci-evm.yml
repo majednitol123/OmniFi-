@@ -1,0 +1,56 @@
+name: CI - EVM Contracts
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    paths:
+      - 'chains/evm/**'
+      - '.github/workflows/ci-evm.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  forge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: v1.4.4
+
+      - name: Check Formatting
+        run: |
+          cd chains/evm
+          forge fmt --check
+
+      - name: Build Contracts
+        run: |
+          cd chains/evm
+          forge build --sizes --evm-version cancun
+
+      - name: Run Unit Tests
+        run: |
+          cd chains/evm
+          forge test -vvv --evm-version cancun
+
+      - name: Run CI Fuzz Tests
+        run: |
+          cd chains/evm
+          FOUNDRY_PROFILE=ci forge test --match-test "testFuzz" -vvv --evm-version cancun
+
+      - name: Run Stateful Invariant Tests
+        run: |
+          cd chains/evm
+          FOUNDRY_PROFILE=ci forge test --match-test "invariant_" -vvv --evm-version cancun
+
+      - name: Run Security Regression Tests
+        run: |
+          cd chains/evm
+          forge test --match-path test/security/SecurityRegression.t.sol -vvv --evm-version cancun

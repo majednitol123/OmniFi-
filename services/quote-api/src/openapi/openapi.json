@@ -1,0 +1,383 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "OmniFi Multi-Chain DEX & Data Platform API",
+    "version": "1.0.0",
+    "description": "Enterprise-grade RESTful API for multi-chain routing, pool querying, transaction preparation, on-chain state indexing, and risk analytics across EVM and Solana."
+  },
+  "servers": [
+    {
+      "url": "https://api.omnifi.finance",
+      "description": "Production API"
+    },
+    {
+      "url": "http://localhost:3001",
+      "description": "Local Development Server"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Service Health Check",
+        "responses": {
+          "200": {
+            "description": "Healthy response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string" },
+                    "timestamp": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/networks": {
+      "get": {
+        "summary": "List Supported Networks",
+        "description": "Retrieves supported EVM chains and Solana clusters with status and RPC metadata.",
+        "responses": {
+          "200": {
+            "description": "Network list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "networks": { "type": "array", "items": { "$ref": "#/components/schemas/NetworkInfo" } },
+                    "total": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/tokens": {
+      "get": {
+        "summary": "List Tokens",
+        "description": "Retrieves tokens across supported networks with optional filtering.",
+        "parameters": [
+          { "name": "networkId", "in": "query", "schema": { "type": "string" } },
+          { "name": "symbol", "in": "query", "schema": { "type": "string" } },
+          { "name": "riskTier", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Token list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "tokens": { "type": "array", "items": { "$ref": "#/components/schemas/TokenInfo" } },
+                    "total": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/tokens/{network}/{asset}": {
+      "get": {
+        "summary": "Get Token Metadata",
+        "parameters": [
+          { "name": "network", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "asset", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Token metadata",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/TokenInfo" } } }
+          },
+          "404": { "$ref": "#/components/responses/ProblemDetails" }
+        }
+      }
+    },
+    "/api/v1/pools": {
+      "get": {
+        "summary": "List Liquidity Pools",
+        "parameters": [
+          { "name": "networkId", "in": "query", "schema": { "type": "string" } },
+          { "name": "protocol", "in": "query", "schema": { "type": "string" } },
+          { "name": "token", "in": "query", "schema": { "type": "string" } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer" } },
+          { "name": "offset", "in": "query", "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pool list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pools": { "type": "array", "items": { "$ref": "#/components/schemas/PoolInfo" } },
+                    "total": { "type": "integer" },
+                    "offset": { "type": "integer" },
+                    "limit": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/pools/{network}/{poolId}": {
+      "get": {
+        "summary": "Get Pool Details",
+        "parameters": [
+          { "name": "network", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "poolId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pool details",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PoolInfo" } } }
+          },
+          "404": { "$ref": "#/components/responses/ProblemDetails" }
+        }
+      }
+    },
+    "/api/v1/positions": {
+      "get": {
+        "summary": "List User Positions",
+        "parameters": [
+          { "name": "owner", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "networkId", "in": "query", "schema": { "type": "string" } },
+          { "name": "poolId", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "User positions list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "positions": { "type": "array", "items": { "$ref": "#/components/schemas/PositionInfo" } },
+                    "total": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/swap/prepare": {
+      "post": {
+        "summary": "Prepare Swap Transaction",
+        "description": "Prepares an unsigned transaction payload for client-side signing without custodying keys.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SwapPrepareRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Prepared transaction payload",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PreparedTransactionResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/ProblemDetails" }
+        }
+      }
+    },
+    "/api/v1/liquidity/add/prepare": {
+      "post": {
+        "summary": "Prepare Add Liquidity Transaction",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/LiquidityAddPrepareRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Prepared transaction payload" }
+        }
+      }
+    },
+    "/api/v1/liquidity/remove/prepare": {
+      "post": {
+        "summary": "Prepare Remove Liquidity Transaction",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/LiquidityRemovePrepareRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Prepared transaction payload" }
+        }
+      }
+    },
+    "/api/v1/positions/collect/prepare": {
+      "post": {
+        "summary": "Prepare Collect Fees Transaction",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CollectFeesPrepareRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Prepared transaction payload" }
+        }
+      }
+    },
+    "/api/v1/quotes": {
+      "get": {
+        "summary": "Request Optimal Swap Quote",
+        "parameters": [
+          { "name": "tokenIn", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "tokenOut", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "amountIn", "in": "query", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Quote response" },
+          "400": { "$ref": "#/components/responses/ProblemDetails" }
+        }
+      }
+    },
+    "/api/v1/simulate": {
+      "post": {
+        "summary": "Simulate Transaction",
+        "responses": {
+          "200": { "description": "Simulation result" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "NetworkInfo": {
+        "type": "object",
+        "properties": {
+          "networkId": { "type": "string" },
+          "name": { "type": "string" },
+          "namespace": { "type": "string", "enum": ["eip155", "solana"] },
+          "chainRef": { "type": "string" },
+          "rpcUrl": { "type": "string" },
+          "status": { "type": "string" }
+        }
+      },
+      "TokenInfo": {
+        "type": "object",
+        "properties": {
+          "networkId": { "type": "string" },
+          "address": { "type": "string" },
+          "name": { "type": "string" },
+          "symbol": { "type": "string" },
+          "decimals": { "type": "integer" },
+          "riskTier": { "type": "string" }
+        }
+      },
+      "PoolInfo": {
+        "type": "object",
+        "properties": {
+          "poolId": { "type": "string" },
+          "networkId": { "type": "string" },
+          "poolType": { "type": "string" },
+          "feeTier": { "type": "integer" }
+        }
+      },
+      "PositionInfo": {
+        "type": "object",
+        "properties": {
+          "positionId": { "type": "string" },
+          "networkId": { "type": "string" },
+          "owner": { "type": "string" },
+          "liquidity": { "type": "string" }
+        }
+      },
+      "SwapPrepareRequest": {
+        "type": "object",
+        "required": ["namespace", "networkId", "userAddress", "protocol", "tokenIn", "tokenOut", "amountIn", "minAmountOut"],
+        "properties": {
+          "namespace": { "type": "string", "enum": ["eip155", "solana"] },
+          "networkId": { "type": "string" },
+          "userAddress": { "type": "string" },
+          "protocol": { "type": "string", "enum": ["v2", "clmm", "v4", "amm"] },
+          "tokenIn": { "type": "string" },
+          "tokenOut": { "type": "string" },
+          "amountIn": { "type": "string" },
+          "minAmountOut": { "type": "string" }
+        }
+      },
+      "LiquidityAddPrepareRequest": {
+        "type": "object",
+        "required": ["namespace", "networkId", "userAddress", "protocol", "token0", "token1", "amount0Desired", "amount1Desired"],
+        "properties": {
+          "namespace": { "type": "string", "enum": ["eip155", "solana"] },
+          "networkId": { "type": "string" },
+          "userAddress": { "type": "string" }
+        }
+      },
+      "LiquidityRemovePrepareRequest": {
+        "type": "object",
+        "required": ["namespace", "networkId", "userAddress", "protocol", "poolId", "liquidity", "amount0Min", "amount1Min"],
+        "properties": {
+          "namespace": { "type": "string" },
+          "poolId": { "type": "string" }
+        }
+      },
+      "CollectFeesPrepareRequest": {
+        "type": "object",
+        "required": ["namespace", "networkId", "owner", "poolId", "positionId"],
+        "properties": {
+          "namespace": { "type": "string" },
+          "positionId": { "type": "string" }
+        }
+      },
+      "PreparedTransactionResponse": {
+        "type": "object",
+        "properties": {
+          "namespace": { "type": "string" },
+          "networkId": { "type": "string" },
+          "preparedTransaction": { "type": "object" }
+        }
+      }
+    },
+    "responses": {
+      "ProblemDetails": {
+        "description": "RFC 7807 Problem Details Error Response",
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": { "type": "string" },
+                "title": { "type": "string" },
+                "status": { "type": "integer" },
+                "detail": { "type": "string" },
+                "instance": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

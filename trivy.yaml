@@ -1,0 +1,26 @@
+# OmniFi Protocol — Trivy Security Scanner Configuration
+scan:
+  scanners:
+    - vuln
+    - misconfig
+    - secret
+  skip-dirs:
+    - "node_modules"
+    - "target"
+    - "out"
+    - "cache"
+    - ".turbo"
+    - ".git"
+  skip-files:
+    - "pnpm-lock.yaml"
+
+severity:
+  - HIGH
+  - CRITICAL
+
+misconfiguration:
+  scanners:
+    - dockerfile
+    - terraform
+    - kubernetes
+

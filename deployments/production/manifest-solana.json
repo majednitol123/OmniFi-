@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "releaseVersion": "1.0.0",
+  "stage": "pre-production-testnet",
+  "network": {
+    "namespace": "solana",
+    "cluster": "mainnet-beta",
+    "genesisHash": "5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d",
+    "rpcUrls": [
+      "https://api.mainnet-beta.solana.com",
+      "https://solana-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}"
+    ],
+    "blockExplorerUrl": "https://solscan.io"
+  },
+  "compiler": {
+    "anchorVersion": "0.32.1",
+    "rustcVersion": "1.89.0",
+    "solanaCliVersion": "1.18.26",
+    "reproducibleBuildContainer": "coralxyz/anchor:v0.32.1"
+  },
+  "programs": {
+    "omnifi_amm": {
+      "programId": "Ad85ZckvQezw7n3VjYqgoXYPyV5zCsTAzrG8qMhs6La3",
+      "binaryHashSha256": "da9cea38179c61ddb68fa5879da63535c9d44e7a896793638f627f62f0218129",
+      "upgradeAuthority": "SqdGov44444444444444444444444444444444444444",
+      "pdaAuthoritySeeds": ["omnifi_amm_auth"],
+      "tokenProgram": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+    },
+    "omnifi_clmm": {
+      "programId": "BSn4qU6Reocr7apUznvRkXLQ4psydsrayW9YWyToD6x2",
+      "binaryHashSha256": "dd25d8589fbfe79d9999ee779a71386b140c15654882e800634d1cab1e8b837a",
+      "upgradeAuthority": "SqdGov44444444444444444444444444444444444444",
+      "pdaAuthoritySeeds": ["omnifi_clmm_auth"],
+      "tokenProgram": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+    }
+  },
+  "governance": {
+    "type": "Squads_v4_Multisig",
+    "address": "SqdGov44444444444444444444444444444444444444",
+    "threshold": "2-of-4",
+    "members": [
+      "Omni111111111111111111111111111111111111111",
+      "Omni222222222222222222222222222222222222222",
+      "Omni333333333333333333333333333333333333333",
+      "Omni444444444444444444444444444444444444444"
+    ],
+    "timelockExecutionDelaySeconds": 86400
+  }
+}

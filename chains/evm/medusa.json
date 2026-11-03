@@ -1,0 +1,27 @@
+{
+  "$schema": "https://raw.githubusercontent.com/crytic/medusa/master/medusa.schema.json",
+  "fuzzing": {
+    "workers": 4,
+    "testLimit": 100000,
+    "timeout": 300,
+    "callSequenceLength": 100,
+    "corpusDirectory": "medusa-corpus",
+    "coverage": true,
+    "targetContracts": [
+      "OmniFiV2Pair",
+      "OmniFiPool",
+      "OmniFiPoolManager"
+    ]
+  },
+  "compilation": {
+    "platform": "foundry",
+    "solcVersion": "0.8.26",
+    "evmVersion": "cancun",
+    "target": "foundry"
+  },
+  "logging": {
+    "level": "INFO",
+    "logFile": "medusa.log"
+  }
+}
+

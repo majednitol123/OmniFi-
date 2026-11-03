@@ -1,0 +1,454 @@
+{
+  "metadata": {
+    "generator": "omnifi-clmm-reference-model",
+    "version": "1.0",
+    "spec": "evm-clmm-spec.md",
+    "q96": "79228162514264337593543950336",
+    "q128": "340282366920938463463374607431768211456",
+    "fee_denominator": 1000000,
+    "min_tick": -887272,
+    "max_tick": 887272,
+    "min_sqrt_price": "4295128739",
+    "max_sqrt_price": "1461446703485210103287273052203988822378723970342"
+  },
+  "tick_to_sqrt_price": [
+    {
+      "tick": 0,
+      "sqrt_price_x96": "79228162514264337593543950336"
+    },
+    {
+      "tick": 1,
+      "sqrt_price_x96": "79232123823359799118286999567"
+    },
+    {
+      "tick": -1,
+      "sqrt_price_x96": "79224201403219477170569942573"
+    },
+    {
+      "tick": 100,
+      "sqrt_price_x96": "79625275426524748796330556127"
+    },
+    {
+      "tick": -100,
+      "sqrt_price_x96": "78833030112140176575862854578"
+    },
+    {
+      "tick": 887272,
+      "sqrt_price_x96": "1461446703485210103244672773810124308346321380902"
+    },
+    {
+      "tick": -887272,
+      "sqrt_price_x96": "4295128739"
+    },
+    {
+      "tick": 60,
+      "sqrt_price_x96": "79466191966197645195421774832"
+    },
+    {
+      "tick": -60,
+      "sqrt_price_x96": "78990846045029531151608375685"
+    },
+    {
+      "tick": 23028,
+      "sqrt_price_x96": "250553947533412109193337304114"
+    },
+    {
+      "tick": -23028,
+      "sqrt_price_x96": "25052894984021797146183221488"
+    },
+    {
+      "tick": 46054,
+      "sqrt_price_x96": "792281450588003167884250659084"
+    },
+    {
+      "tick": 200,
+      "sqrt_price_x96": "80024378775772204256025656562"
+    },
+    {
+      "tick": -200,
+      "sqrt_price_x96": "78439868342809377387252074392"
+    },
+    {
+      "tick": 1000,
+      "sqrt_price_x96": "83290069058676223003182343269"
+    },
+    {
+      "tick": -1000,
+      "sqrt_price_x96": "75364347830767020784054125654"
+    },
+    {
+      "tick": 10000,
+      "sqrt_price_x96": "130621891405341611593710811005"
+    },
+    {
+      "tick": -10000,
+      "sqrt_price_x96": "48055510970269007215549348796"
+    },
+    {
+      "tick": 100000,
+      "sqrt_price_x96": "11755562826496067164730007768449"
+    },
+    {
+      "tick": -100000,
+      "sqrt_price_x96": "533968626430936354154228407"
+    }
+  ],
+  "sqrt_price_to_tick": [
+    {
+      "sqrt_price_x96": "79228162514264337593543950336",
+      "expected_tick": 0,
+      "recovered_tick": 0
+    },
+    {
+      "sqrt_price_x96": "79625275426524748796330556127",
+      "expected_tick": 100,
+      "recovered_tick": 100
+    },
+    {
+      "sqrt_price_x96": "78833030112140176575862854578",
+      "expected_tick": -100,
+      "recovered_tick": -100
+    },
+    {
+      "sqrt_price_x96": "79466191966197645195421774832",
+      "expected_tick": 60,
+      "recovered_tick": 60
+    },
+    {
+      "sqrt_price_x96": "250553947533412109193337304114",
+      "expected_tick": 23028,
+      "recovered_tick": 23028
+    },
+    {
+      "sqrt_price_x96": "4295128739",
+      "expected_tick": -887272,
+      "recovered_tick": -887272
+    },
+    {
+      "sqrt_price_x96": "1461446703485210103244672773810124308346321380902",
+      "expected_tick": 887272,
+      "recovered_tick": 887272
+    }
+  ],
+  "swap_step": [
+    {
+      "name": "typical_step_0.30pct_zeroForOne",
+      "inputs": {
+        "sqrt_price_current_x96": "79228162514264337593543950336",
+        "sqrt_price_target_x96": "78990846045029531151608375685",
+        "liquidity": 1000000000000000000,
+        "amount_remaining": 1000000000000000,
+        "fee": 3000
+      },
+      "expected": {
+        "sqrt_price_next_x96": "79149250711305166342700278159",
+        "amount_in": 997000000000000,
+        "amount_out": 996006981039903,
+        "fee_amount": 3000000000000
+      }
+    },
+    {
+      "name": "small_step_no_cross",
+      "inputs": {
+        "sqrt_price_current_x96": "79228162514264337593543950336",
+        "sqrt_price_target_x96": "78990846045029531151608375685",
+        "liquidity": 1000000000000000000,
+        "amount_remaining": 1000,
+        "fee": 3000
+      },
+      "expected": {
+        "sqrt_price_next_x96": "79228162514264258603065923615",
+        "amount_in": 997,
+        "amount_out": 996,
+        "fee_amount": 3
+      }
+    },
+    {
+      "name": "typical_step_0.30pct_oneForZero",
+      "inputs": {
+        "sqrt_price_current_x96": "79228162514264337593543950336",
+        "sqrt_price_target_x96": "79466191966197645195421774832",
+        "liquidity": 1000000000000000000,
+        "amount_remaining": 1000000000000000,
+        "fee": 3000
+      },
+      "expected": {
+        "sqrt_price_next_x96": "79307152992291059138124713654",
+        "amount_in": 997000000000000,
+        "amount_out": 996006981039903,
+        "fee_amount": 3000000000000
+      }
+    },
+    {
+      "name": "stablecoin_step_0.01pct",
+      "inputs": {
+        "sqrt_price_current_x96": "79228162514264337593543950336",
+        "sqrt_price_target_x96": "79224201403219477170569942573",
+        "liquidity": 1000000000000000000,
+        "amount_remaining": 1000000000000,
+        "fee": 100
+      },
+      "expected": {
+        "sqrt_price_next_x96": "79228083294103851819102516416",
+        "amount_in": 999900000000,
+        "amount_out": 999899000200,
+        "fee_amount": 100000000
+      }
+    },
+    {
+      "name": "high_liquidity_step",
+      "inputs": {
+        "sqrt_price_current_x96": "79228162514264337593543950336",
+        "sqrt_price_target_x96": "78990846045029531151608375685",
+        "liquidity": 1000000000000000000000000,
+        "amount_remaining": 1000000000000000000,
+        "fee": 3000
+      },
+      "expected": {
+        "sqrt_price_next_x96": "79228083523865064300074843162",
+        "amount_in": 997000000000000000,
+        "amount_out": 996999005991991025,
+        "fee_amount": 3000000000000000
+      }
+    }
+  ],
+  "amount_calculations": [
+    {
+      "name": "narrow_range_at_parity",
+      "inputs": {
+        "tick_lower": -60,
+        "tick_upper": 60,
+        "liquidity": 1000000000000000000,
+        "sqrt_price_lower_x96": "78990846045029531151608375685",
+        "sqrt_price_upper_x96": "79466191966197645195421774832"
+      },
+      "expected": {
+        "amount0_round_down": 5999709018652706,
+        "amount0_round_up": 5999709018652707,
+        "amount1_round_down": 5999709018652706,
+        "amount1_round_up": 5999709018652707
+      }
+    },
+    {
+      "name": "full_range",
+      "inputs": {
+        "tick_lower": -887220,
+        "tick_upper": 887220,
+        "liquidity": 1000000000000000000,
+        "sqrt_price_lower_x96": "4306310043",
+        "sqrt_price_upper_x96": "1457652066949847389937902910258958406565750968362"
+      },
+      "expected": {
+        "amount0_round_down": 18398155665324522383337355613621339061,
+        "amount0_round_up": 18398155665324522383337355613621339062,
+        "amount1_round_down": 18398155664501368265872409502727663969,
+        "amount1_round_up": 18398155664501368265872409502727663970
+      }
+    },
+    {
+      "name": "out_of_range_above",
+      "inputs": {
+        "tick_lower": 23000,
+        "tick_upper": 23100,
+        "liquidity": 1000000000000000,
+        "sqrt_price_lower_x96": "250203434948259642083317319083",
+        "sqrt_price_upper_x96": "251457522024833871755803350098"
+      },
+      "expected": {
+        "amount0_round_down": 1579244514392,
+        "amount0_round_up": 1579244514393,
+        "amount1_round_down": 15828804263237,
+        "amount1_round_up": 15828804263238
+      }
+    },
+    {
+      "name": "out_of_range_below",
+      "inputs": {
+        "tick_lower": -100,
+        "tick_upper": -60,
+        "liquidity": 1000000000000000,
+        "sqrt_price_lower_x96": "78833030112140176575862854578",
+        "sqrt_price_upper_x96": "78990846045029531151608375685"
+      },
+      "expected": {
+        "amount0_round_down": 2007915560309,
+        "amount0_round_up": 2007915560310,
+        "amount1_round_down": 1991917114838,
+        "amount1_round_up": 1991917114839
+      }
+    },
+    {
+      "name": "wide_range",
+      "inputs": {
+        "tick_lower": -600,
+        "tick_upper": 600,
+        "liquidity": 1000000000000000000,
+        "sqrt_price_lower_x96": "76886731765546235930195592749",
+        "sqrt_price_upper_x96": "81640896826356156310682304525"
+      },
+      "expected": {
+        "amount0_round_down": 60005999255049926,
+        "amount0_round_up": 60005999255049927,
+        "amount1_round_down": 60005999255049926,
+        "amount1_round_up": 60005999255049927
+      }
+    }
+  ],
+  "mint_position": [
+    {
+      "name": "in_range_parity_0.30pct",
+      "inputs": {
+        "sqrt_price_current_x96": "79228162514264337593543950336",
+        "tick_lower": -60,
+        "tick_upper": 60,
+        "amount0_desired": 1000000000000000000,
+        "amount1_desired": 1000000000000000000,
+        "fee": 3000
+      },
+      "expected": {
+        "tick_lower": -60,
+        "tick_upper": 60,
+        "liquidity": 333850249709699449134,
+        "amount0": 1000000000000000000,
+        "amount1": 1000000000000000000,
+        "sqrt_price_lower_x96": "78990846045029531151608375685",
+        "sqrt_price_upper_x96": "79466191966197645195421774832",
+        "in_range": true
+      }
+    },
+    {
+      "name": "wide_range_parity",
+      "inputs": {
+        "sqrt_price_current_x96": "79228162514264337593543950336",
+        "tick_lower": -600,
+        "tick_upper": 600,
+        "amount0_desired": 1000000000000000000,
+        "amount1_desired": 1000000000000000000,
+        "fee": 3000
+      },
+      "expected": {
+        "tick_lower": -600,
+        "tick_upper": 600,
+        "liquidity": 33837499809738371427,
+        "amount0": 1000000000000000000,
+        "amount1": 1000000000000000000,
+        "sqrt_price_lower_x96": "76886731765546235930195592749",
+        "sqrt_price_upper_x96": "81640896826356156310682304525",
+        "in_range": true
+      }
+    },
+    {
+      "name": "above_range_token0_only",
+      "inputs": {
+        "sqrt_price_current_x96": "79228162514264337593543950336",
+        "tick_lower": 120,
+        "tick_upper": 240,
+        "amount0_desired": 1000000000000000000,
+        "amount1_desired": 0,
+        "fee": 3000
+      },
+      "expected": {
+        "tick_lower": 120,
+        "tick_upper": 240,
+        "liquidity": 168181517570088585074,
+        "amount0": 1000000000000000000,
+        "amount1": 0,
+        "sqrt_price_lower_x96": "79704936542881920863903188245",
+        "sqrt_price_upper_x96": "80184579670909998657705019576",
+        "in_range": false
+      }
+    },
+    {
+      "name": "below_range_token1_only",
+      "inputs": {
+        "sqrt_price_current_x96": "79228162514264337593543950336",
+        "tick_lower": -240,
+        "tick_upper": -120,
+        "amount0_desired": 0,
+        "amount1_desired": 1000000000000000000,
+        "fee": 3000
+      },
+      "expected": {
+        "tick_lower": -240,
+        "tick_upper": -120,
+        "liquidity": 168181517570088585074,
+        "amount0": 0,
+        "amount1": 1000000000000000000,
+        "sqrt_price_lower_x96": "78283153209119306461466102222",
+        "sqrt_price_upper_x96": "78754240422856966435523493929",
+        "in_range": false
+      }
+    },
+    {
+      "name": "tight_range_stablecoin",
+      "inputs": {
+        "sqrt_price_current_x96": "79228162514264337593543950336",
+        "tick_lower": -1,
+        "tick_upper": 1,
+        "amount0_desired": 1000000000000000000,
+        "amount1_desired": 1000000000000000000,
+        "fee": 100
+      },
+      "expected": {
+        "tick_lower": -1,
+        "tick_upper": 1,
+        "liquidity": 20001499987500624960940,
+        "amount0": 1000000000000000000,
+        "amount1": 1000000000000000000,
+        "sqrt_price_lower_x96": "79224201403219477170569942573",
+        "sqrt_price_upper_x96": "79232123823359799118286999567",
+        "in_range": true
+      }
+    }
+  ],
+  "fee_growth": [
+    {
+      "name": "basic_fee_growth",
+      "inputs": {
+        "fee_amount": 1000000000000000,
+        "liquidity": 1000000000000000000
+      },
+      "expected": {
+        "fee_growth_increment_x128": "340282366920938463463374607431768211",
+        "fee_growth_increment_x64": "18446744073709551"
+      }
+    },
+    {
+      "name": "small_fee_high_liquidity",
+      "inputs": {
+        "fee_amount": 100,
+        "liquidity": 1000000000000000000000000
+      },
+      "expected": {
+        "fee_growth_increment_x128": "34028236692093846",
+        "fee_growth_increment_x64": "0"
+      }
+    },
+    {
+      "name": "fee_growth_inside",
+      "inputs": {
+        "fee_growth_global": 1000000000000000000000000000000,
+        "fee_growth_outside_lower": 10000000000000000000000000000,
+        "fee_growth_outside_upper": 20000000000000000000000000000,
+        "tick_lower": -60,
+        "tick_upper": 60,
+        "tick_current": 0
+      },
+      "expected": {
+        "fee_growth_inside": 970000000000000000000000000000
+      }
+    },
+    {
+      "name": "fees_owed",
+      "inputs": {
+        "fee_growth_inside_current": 1000000000000000000000000000000,
+        "fee_growth_inside_last": 500000000000000000000000000000,
+        "liquidity": 1000000000000000000
+      },
+      "expected": {
+        "fees_owed_x128": 1469367938,
+        "fees_owed_x64": 27105054312137610850186320021
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "solc_remaps": [
+    "@openzeppelin/=lib/openzeppelin-contracts/",
+    "forge-std/=lib/forge-std/src/"
+  ],
+  "filter_paths": "(lib/|test/|script/)",
+  "compile_force_framework": "foundry",
+  "legacy_ast": false
+}
+
